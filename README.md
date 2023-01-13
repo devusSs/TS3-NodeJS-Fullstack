@@ -8,7 +8,7 @@
 ## Project Explaination
 
 This project serves the point of collecting, distributing and showing data collected on your TeamSpeak server so you can always keep track of users, commands (via the Bot) and messages sent on your server.<br/>
-Considering not every user may accept being tracked across your server you may want to notice them in advance or when joining your TeamSpeak server that your server is being monitored and you (as the server owner) may always check the data.
+Considering not every user may accept or like being tracked across your server you may want to notify them in advance or when joining your TeamSpeak server that your server is being monitored and you (as the server owner) may always check the data. This can be made possible by displaying a message when joining the server which user needs to accept.
 
 ## Project Warning
 
@@ -17,20 +17,25 @@ There may also be bugs and unwanted features which cannot be fixed or disabled y
 
 ## Project Structure
 
-The project consists of three key elements:
+The project consists of three components:
 
-- the Bot which collects data from the TeamSpeak 3 server and adds it to a Postgres database
+- the Bot which collects data (users, commands and messages) from the TeamSpeak 3 server and adds it to a Postgres database
 - the API which distributes data from a Postgres database
 - the Client which displays the data via web
 
-Everything has been written in Typescript and should be typesafe, there are however element which have no valid types yet so expect bugs.
+Everything has been written in Typescript and should be typesafe, there are however elements which have no valid or any types yet so expect bugs.
 
 ## Project Setup
 
 Check the .env.example files in the bot's, api's and client's directory to find out how to setup the project.<br/>
 Docker support has not been added yet but will be added in the future so you can start the application with a single command.
-For now you may need to use node in every directory. Check the package.json in every directory to find out more.
-<br/>
+For now you may need to use node in every directory. This usually (!) means:
+
+```bash
+npm run build && node build/app.ts
+```
+
+This may be different in Vite (the frontend) where you need to build the app using `npm run build` and deploy it using [NGINX](https://www.nginx.com/) for example.
 <br/>
 <br/>
 
@@ -38,10 +43,10 @@ For now you may need to use node in every directory. Check the package.json in e
 
 Read the following disclaimers carefully before using this software:
 
-- This software IS NOT INTENDED FOR PRODUCTION USE.
-- I am in no way responsible for any damage this software might cause. USE AT YOUR OWN RISK.
+- This software is NOT (!) INTENDED FOR PRODUCTION USE.
+- I am in no way responsible for any damage this software might cause. USE AT YOUR OWN RISK!
 
-## Built With / Frameworks
+## Built With / Frameworks / Credits
 
 - [NodeJS](https://nodejs.org/) - Javascript Runtime
 - [Typescript](https://www.typescriptlang.org/) - Types for Javascript
