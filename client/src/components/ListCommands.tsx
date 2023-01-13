@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import '../main.css'
 import { Command } from '../types/Command';
+import Table from 'react-bootstrap/Table';
 
 export default function GetCommands() {
     const [commands, setCommands] = useState<Command[]>([])
@@ -19,12 +20,11 @@ export default function GetCommands() {
     useEffect(() => {
       getCommands();
     }, []);
-  
+
     return (
-      <table className="table table-hover table-dark">
+      <Table striped bordered hover variant="dark">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Output</th>
             <th>Userlevel</th>
@@ -36,8 +36,7 @@ export default function GetCommands() {
         </thead>
         <tbody>
           {commands.map((command) => (
-            <tr key="{user_row}">
-              <td key="{id}">{command.ID}</td>
+            <tr key={command.ID}>
               <td key="{name}">{command.Name}</td>
               <td key="{output}">{command.Output}</td>
               <td key="{userlevel}">{command.Userlevel}</td>
@@ -48,6 +47,6 @@ export default function GetCommands() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     )
 }

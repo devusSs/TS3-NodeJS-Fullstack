@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import '../main.css'
-
+import Table from "react-bootstrap/Table";
 import { User } from "../types/User"
 
 export default function GetUsers() {
@@ -22,10 +22,9 @@ export default function GetUsers() {
     }, []);
     
     return (
-        <table className="table table-hover table-dark">
+      <Table striped bordered hover variant="dark">
       <thead>
         <tr>
-          <th>ID</th>
           <th>TS ID</th>
           <th>First Username</th>
           <th>Latest Username</th>
@@ -42,8 +41,7 @@ export default function GetUsers() {
       </thead>
       <tbody>
         {users.map((user) => (
-          <tr key="{user_row}">
-            <td key="{id}">{user.ID}</td>
+          <tr key={user.ID}>
             <td key="{ts_id}">{user.TSID}</td>
             <td key="{first_username}">{user.FirstUsername}</td>
             <td key="{latest_username}">{user.LatestUsername}</td>
@@ -59,6 +57,6 @@ export default function GetUsers() {
           </tr>
         ))}
       </tbody>
-    </table>
+    </Table>
     )
 }

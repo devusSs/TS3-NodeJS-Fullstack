@@ -10,8 +10,8 @@ export default function TopNav() {
                 <Nav className="me-auto">
                 <Nav.Link href="/status"><b style={{"color": "white"}}>Status</b></Nav.Link>
                 <Nav.Link href="/users"><b style={{"color": "white"}}>Users</b></Nav.Link>
-                <Nav.Link href="/messages"><b style={{"color": "white"}}>Messages</b></Nav.Link>
                 <Nav.Link href="/commands"><b style={{"color": "white"}}>Commands</b></Nav.Link>
+                <Nav.Link href="/messages"><b style={{"color": "white"}}>Messages</b></Nav.Link>
             </Nav>
             </Container>
         </Navbar>

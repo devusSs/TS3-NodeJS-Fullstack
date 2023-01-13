@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import '../main.css'
 import { Message } from '../types/Message';
+import Table from "react-bootstrap/Table";
 
 // TODO: add search function / label for messages => filter
 export default function GetMessages() {
@@ -22,10 +23,9 @@ export default function GetMessages() {
     }, []);
   
     return (
-      <table className="table table-hover table-dark">
+      <Table striped bordered hover variant="dark">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Invoker Nickname</th>
             <th>Invoker Database ID</th>
             <th>Invoker Unique ID</th>
@@ -37,8 +37,7 @@ export default function GetMessages() {
         </thead>
         <tbody>
           {messages.map((message) => (
-            <tr key="{message_row}">
-              <td key="{id}">{message.ID}</td>
+            <tr key={message.ID}>
               <td key="{nick}">{message.InvokerNick}</td>
               <td key="{dbid}">{message.InvokerDBID}</td>
               <td key="{uid}">{message.InvokerUID}</td>
@@ -49,6 +48,6 @@ export default function GetMessages() {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     )
 }
