@@ -8,9 +8,8 @@ export default function GetStatus() {
       try {
         let url = import.meta.env.VITE_BASE_URL || "http://localhost:3000"
         const resp = await fetch(url + "/status")
-        if (resp.status === 200) {
-            setStatus("Bot is up and running.")
-        }
+        const respJson = await resp.json();
+        setStatus(respJson.data.status);
       } catch (err) {
         console.error(err)
       }

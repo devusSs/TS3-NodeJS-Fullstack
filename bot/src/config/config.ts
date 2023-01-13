@@ -15,6 +15,7 @@ interface ENV {
   POSTGRES_USER: string | undefined;
   POSTGRES_PASSWORD: string | undefined;
   POSTGRES_DB: string | undefined;
+  API_URL: string | undefined;
 }
 
 interface Config {
@@ -30,6 +31,7 @@ interface Config {
   POSTGRES_USER: string;
   POSTGRES_PASSWORD: string;
   POSTGRES_DB: string;
+  API_URL: string;
 }
 
 const getConfig = (): ENV => {
@@ -50,6 +52,7 @@ const getConfig = (): ENV => {
     POSTGRES_USER: process.env.POSTGRES_USER,
     POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
     POSTGRES_DB: process.env.POSTGRES_DB,
+    API_URL: process.env.API_URL,
   };
 };
 

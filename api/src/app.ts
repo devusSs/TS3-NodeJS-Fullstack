@@ -3,7 +3,7 @@ import express, { Express } from "express";
 import config from "./config/config";
 import cors from "cors";
 
-import { defaultRoute } from "./routes/home";
+import { defaultRoute, invalidateBotStatus } from "./routes/home";
 import { userRoutes } from "./routes/users";
 import { commandRoutes } from "./routes/commands";
 import { messagesRoutes } from "./routes/messages";
@@ -37,6 +37,8 @@ const start = async () => {
   app.use("/users", userRoutes);
   app.use("/commands", commandRoutes);
   app.use("/messages", messagesRoutes);
+
+  setInterval(invalidateBotStatus, 5000);
 
   app.listen(config.PORT, () => {
     console.log(`API is running at http://localhost:${config.PORT}`);

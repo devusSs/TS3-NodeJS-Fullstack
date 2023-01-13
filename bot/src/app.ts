@@ -96,6 +96,23 @@ const start = async () => {
 
     const finishTime: Temporal.PlainTime = Temporal.Now.plainTimeISO();
 
+    const pingAPIStatus = async (): Promise<void> => {
+      const resp = await fetch(config.API_URL + "/status/accept", {
+        method: "POST",
+        cache: "no-cache",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: "Hello from the Bot!" }),
+      });
+      if (resp.status !== 200) {
+        console.log(
+          `Error posting against API status route: ${resp.status} ; ${resp.statusText}`
+        );
+      }
+    };
+    setInterval(pingAPIStatus, 2000);
+
     console.log(`Init time: ${finishTime.since(startTime).milliseconds} ms`);
   });
 
