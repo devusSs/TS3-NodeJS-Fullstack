@@ -54,6 +54,7 @@ Read the following disclaimers carefully before using this software:
 - [TS3-NodeJS-Library](https://github.com/Multivit4min/TS3-NodeJS-Library) - TeamSpeak 3 Query framework for Typescript / Javascript
 - [Vite ReactJS](https://vitejs.dev/guide/) - Vite React JS Frontend
 - [React Bootstrap](https://react-bootstrap.github.io/) - Styled Components for React
+- [React Toastify](https://fkhadra.github.io/react-toastify/introduction) - Styled Toasts for React
 
 ## Authors
 

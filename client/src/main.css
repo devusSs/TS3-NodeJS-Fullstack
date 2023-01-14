@@ -40,3 +40,19 @@ body {
 .tos span {
   margin-right: 50px;
 }
+
+.status {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 15%;
+  color: white;
+}
+
+.status button {
+  margin-top: 3%;
+}
+
+.status .toast-container {
+  margin-top: 3%;
+}
