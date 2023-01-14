@@ -8,7 +8,7 @@
 ## Project Explaination
 
 This project serves the point of collecting, distributing and showing data collected on your TeamSpeak server so you can always keep track of users, commands (via the Bot) and messages sent on your server.<br/>
-Considering not every user may accept or like being tracked across your server you may want to notify them in advance or when joining your TeamSpeak server that your server is being monitored and you (as the server owner) may always check the data. This can be made possible by displaying a message when joining the server which user needs to accept.
+Considering not every user may accept or like being tracked across your server the bot automatically sends a message to every connecting client with the link to the terms of use. This page is being hosted on your frontend.
 
 ## Project Warning
 
@@ -20,7 +20,7 @@ There may also be bugs and unwanted features which cannot be fixed or disabled y
 The project consists of three components:
 
 - the Bot which collects data (users, commands and messages) from the TeamSpeak 3 server and adds it to a Postgres database
-- the API which distributes data from a Postgres database
+- the API which distributes data from the Postgres database
 - the Client which displays the data via web
 
 Everything has been written in Typescript and should be typesafe, there are however elements which have no valid or any types yet so expect bugs.
@@ -35,7 +35,7 @@ For now you may need to use node in every directory. This usually (!) means:
 npm run build && node build/app.ts
 ```
 
-This may be different in Vite (the frontend) where you need to build the app using `npm run build` and deploy it using [NGINX](https://www.nginx.com/) for example.
+This may be different for Vite (the frontend) where you need to build the app using `npm run build` and deploy it using [NGINX](https://www.nginx.com/) for example.
 <br/>
 <br/>
 
@@ -53,6 +53,7 @@ Read the following disclaimers carefully before using this software:
 - [ExpressJS](https://expressjs.com/) - API framework for Typescript / Javascript
 - [TS3-NodeJS-Library](https://github.com/Multivit4min/TS3-NodeJS-Library) - TeamSpeak 3 Query framework for Typescript / Javascript
 - [Vite ReactJS](https://vitejs.dev/guide/) - Vite React JS Frontend
+- [React Bootstrap](https://react-bootstrap.github.io/) - Styled Components for React
 
 ## Authors
 
