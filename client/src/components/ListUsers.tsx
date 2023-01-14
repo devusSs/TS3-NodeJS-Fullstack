@@ -1,28 +1,28 @@
-import { useState, useEffect } from 'react';
-import '../main.css'
+import { useState, useEffect } from "react";
+import "../main.css";
 import Table from "react-bootstrap/Table";
-import { User } from "../types/User"
+import { User } from "../types/User";
 
 export default function GetUsers() {
-    const [users, setUsers] = useState<User[]>([])
+  const [users, setUsers] = useState<User[]>([]);
 
-    const getUsers = async () => {
-      try {
-        let url = import.meta.env.VITE_BASE_URL || "http://localhost:3000"
-        const resp = await fetch(url + "/users")
-        const jsonData = await resp.json()
-        setUsers(jsonData.data.result)
-      } catch (err) {
-        console.error(err)
-      }
+  const getUsers = async () => {
+    try {
+      let url = import.meta.env.VITE_BASE_URL || "http://localhost:3000";
+      const resp = await fetch(url + "/users");
+      const jsonData = await resp.json();
+      setUsers(jsonData.data.result);
+    } catch (err) {
+      console.error(err);
     }
-  
-    useEffect(() => {
-      getUsers();
-    }, []);
-    
-    return (
-      <Table striped bordered hover variant="dark">
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  return (
+    <Table striped bordered hover variant="dark">
       <thead>
         <tr>
           <th>TS ID</th>
@@ -58,5 +58,5 @@ export default function GetUsers() {
         ))}
       </tbody>
     </Table>
-    )
+  );
 }

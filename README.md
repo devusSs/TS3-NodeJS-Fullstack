@@ -1,4 +1,4 @@
-![ts3.jpg](./ts3.jpg)
+![ts3.jpg](./docs/ts3.jpg)
 (Copyright: https://teamspeak.com)
 <br/>
 <br/>

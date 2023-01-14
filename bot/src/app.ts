@@ -14,6 +14,7 @@ import {
 } from "ts3-nodejs-library";
 import { Whoami } from "ts3-nodejs-library/lib/types/ResponseTypes";
 import { UserConnect, UserDisconnect } from "./types/users";
+import { handleAcceptTOS } from "./tos/tos";
 
 const start = async () => {
   const startTime: Temporal.PlainTime = Temporal.Now.plainTimeISO();
@@ -135,6 +136,8 @@ const start = async () => {
   });
 
   teamspeak.on("clientconnect", async (e: ClientConnectEvent) => {
+    handleAcceptTOS(teamspeak, e);
+
     let user: UserConnect = {
       TSID: e.client.databaseId,
       FirstUsername: e.client.nickname,
@@ -175,6 +178,10 @@ const start = async () => {
   });
 
   teamspeak.on("textmessage", async (e: TextMessageEvent) => {
+    const whoami: Whoami = await teamspeak.whoami();
+    if (e.invoker.uniqueIdentifier === whoami.clientUniqueIdentifier) {
+      return;
+    }
     let msgReturn: string = await messageHandler(e, dbClient);
     if (msgReturn != "") {
       if (msgReturn === "!botjoin") {
