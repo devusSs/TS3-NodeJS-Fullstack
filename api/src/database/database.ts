@@ -4,6 +4,7 @@ import { Command } from "../types/commands";
 import { Message } from "../types/messages";
 import { User } from "../types/users";
 import PINGDATABASE from "./database.base";
+import databaseMigrations from "./database.migrations";
 import operations from "./database.operations";
 
 export class DBClient {
@@ -24,6 +25,12 @@ export class DBClient {
         `database connection not working as expected: ${result.rowCount}`
       );
     }
+  }
+
+  async makeMigrations(): Promise<void> {
+    await this.#db.query(databaseMigrations.CREATEUSERTABLE);
+    await this.#db.query(databaseMigrations.CREATECOMMANDSTABLE);
+    await this.#db.query(databaseMigrations.CREATEMESSAGESTABLE);
   }
 
   async getUsers(): Promise<User[] | Error> {

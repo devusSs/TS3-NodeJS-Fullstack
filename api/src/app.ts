@@ -13,6 +13,8 @@ const start = async () => {
 
   await db.testConnection();
 
+  await db.makeMigrations();
+
   console.log(
     `Successfully connected to Postgres database on ${db.host}:${db.port}`
   );
