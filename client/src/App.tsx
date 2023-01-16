@@ -16,6 +16,8 @@ const App = () => {
   const { user } = useAuthContext();
 
   // TODO: why does this redirect us even when logged in on users, commands and messages
+  // seems to be because the component needs time to fetch user
+  // TODO: implement refresh token fetch and healthcheck(?)
   return (
     <div className="App">
       <BrowserRouter>
@@ -29,18 +31,9 @@ const App = () => {
               path="/login"
               element={!user ? <LoginPage /> : <Navigate to="/" />}
             ></Route>
-            <Route
-              path="/users"
-              element={user ? <GetUsers /> : <Navigate to="/login" />}
-            ></Route>
-            <Route
-              path="/commands"
-              element={user ? <GetCommands /> : <Navigate to="/login" />}
-            ></Route>
-            <Route
-              path="/messages"
-              element={user ? <GetMessages /> : <Navigate to="/login" />}
-            ></Route>
+            <Route path="/users" element={<GetUsers />}></Route>
+            <Route path="/commands" element={<GetCommands />}></Route>
+            <Route path="/messages" element={<GetMessages />}></Route>
             <Route path="*" element={<Home />}></Route>
           </Routes>
         </div>
