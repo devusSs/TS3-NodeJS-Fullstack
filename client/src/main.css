@@ -5,54 +5,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: white;
+  background-color: #191919;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
-
-body {
-  background-color: #191919;
-  color: white;
-}
-
-.centered {
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-}
-
-.home {
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin-top: 15%;
-}
-
-.tos {
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin-top: 5%;
-}
-
-.tos span {
-  margin-right: 50px;
-}
-
-.status {
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin-top: 15%;
-  color: white;
-}
-
-.status button {
-  margin-top: 3%;
-}
-
-.status .toast-container {
-  margin-top: 3%;
 }

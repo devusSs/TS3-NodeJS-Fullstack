@@ -1,9 +1,8 @@
-import "../main.css";
+import "../app.css";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 
-// TODO: make this prettier
-export default function GetTOS() {
+const GetTOS = () => {
   return (
     <div className="tos">
       <h1 style={{ color: "white", fontSize: "30px", marginBottom: "3%" }}>
@@ -18,7 +17,7 @@ export default function GetTOS() {
         <Card
           bg="primary"
           text="dark"
-          style={{ width: "18rem", display: "inline-block" }}
+          style={{ width: "18rem", display: "inline-block", paddingTop: "8px" }}
         >
           <Card.Title style={{ color: "white" }}>User Data</Card.Title>
           <ListGroup variant="flush">
@@ -40,7 +39,11 @@ export default function GetTOS() {
         <Card
           bg="primary"
           text="dark"
-          style={{ width: "18rem", display: "inline-block" }}
+          style={{
+            width: "18rem",
+            display: "inline-block",
+            paddingTop: "8px",
+          }}
         >
           <Card.Title style={{ color: "white" }}>Command Data</Card.Title>
           <ListGroup variant="flush">
@@ -59,7 +62,7 @@ export default function GetTOS() {
         <Card
           bg="primary"
           text="dark"
-          style={{ width: "18rem", display: "inline-block" }}
+          style={{ width: "18rem", display: "inline-block", paddingTop: "8px" }}
         >
           <Card.Title style={{ color: "white" }}>Message Data</Card.Title>
           <ListGroup variant="flush">
@@ -75,4 +78,6 @@ export default function GetTOS() {
       </span>
     </div>
   );
-}
+};
+
+export default GetTOS;

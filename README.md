@@ -12,7 +12,8 @@ Considering not every user may accept or like being tracked across your server t
 
 ## Project Warning
 
-This project has not been entirely finished yet, for example it's lacking authorization on the API and basically any user with the frontend's url may access the data. Use it with caution or behind ip filtering (dynamic ip filtering via hostnames for example).<br/>
+This project has not been entirely finished yet, it's lacking styles and some components.<br/>
+Search for `//TODO:` in the project to see current problems or planned features.<br/>
 There may also be bugs and unwanted features which cannot be fixed or disabled yet.
 
 ## Project Structure

@@ -2,8 +2,11 @@ import { Temporal } from "@js-temporal/polyfill";
 import { SuccessResponse, ErrorResponse } from "../responses/responses";
 import express, { Request, Response } from "express";
 import { Command } from "../types/commands";
+import requireAuth from "../middleware/requireAuth";
 
 export const commandRoutes = express.Router();
+
+commandRoutes.use(requireAuth);
 
 commandRoutes.get("/", async (req: Request, res: Response) => {
   let result: Command[] | Error = await req.app.get("db").getCommands();

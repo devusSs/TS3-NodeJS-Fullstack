@@ -1,15 +1,20 @@
 import { useState, useEffect } from "react";
-import "../main.css";
+import "../app.css";
 import Table from "react-bootstrap/Table";
 import { User } from "../types/User";
+import { useAuthContext } from "../hooks/useAuthContext";
 
-export default function GetUsers() {
+const GetUsers = () => {
   const [users, setUsers] = useState<User[]>([]);
+
+  const { user }: any = useAuthContext();
 
   const getUsers = async () => {
     try {
       let url = import.meta.env.VITE_BASE_URL || "http://localhost:3000";
-      const resp = await fetch(url + "/users");
+      const resp = await fetch(url + "/users", {
+        headers: { Authorization: `Bearer ${user.data.token}` },
+      });
       const jsonData = await resp.json();
       setUsers(jsonData.data.result);
     } catch (err) {
@@ -18,8 +23,10 @@ export default function GetUsers() {
   };
 
   useEffect(() => {
-    getUsers();
-  }, []);
+    if (user) {
+      getUsers();
+    }
+  }, [user]);
 
   return (
     <Table striped bordered hover variant="dark">
@@ -59,4 +66,6 @@ export default function GetUsers() {
       </tbody>
     </Table>
   );
-}
+};
+
+export default GetUsers;

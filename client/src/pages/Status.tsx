@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import "../main.css";
+import "../app.css";
 import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function GetStatus() {
+const GetStatus = () => {
   const [status, setStatus] = useState("Bot is currently not active.");
   const [buttonText, setButtonText] = useState("Refetch Status");
   const [buttonActive, setButtonInactive] = useState(false);
@@ -41,7 +41,12 @@ export default function GetStatus() {
   return (
     <div className="status">
       <h1>{status}</h1>
-      <Button variant="primary" onClick={refreshStatus} disabled={buttonActive}>
+      <Button
+        className="fetch-button"
+        variant="primary"
+        onClick={refreshStatus}
+        disabled={buttonActive}
+      >
         {buttonText}
       </Button>
       <ToastContainer
@@ -59,4 +64,6 @@ export default function GetStatus() {
       />
     </div>
   );
-}
+};
+
+export default GetStatus;

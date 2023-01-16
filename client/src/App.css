@@ -1,3 +1,84 @@
-.App {
+.centered {
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.home {
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  margin-top: 15%;
+}
+
+.tos {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 5%;
+}
+
+.tos span {
+  margin-right: 50px;
+}
+
+.status {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 15%;
+  color: white;
+}
+
+.status .fetch-button {
+  margin-top: 3%;
+}
+
+.status .toast-container {
+  margin-top: 3%;
+  overflow: hidden;
+}
+
+.login-page {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 10%;
+}
+
+.login-page .toast-container {
+  margin-top: 3%;
+  overflow: hidden;
+}
+
+.login-page .loading-info {
+  margin-top: 1%;
+  font-weight: bold;
+  color: white;
+}
+
+.navbar-top .login-button {
+  font-weight: bold;
+  border: 2px solid green;
+  background-color: green;
+  cursor: pointer;
+}
+
+.navbar-top .logout-button {
+  font-weight: bold;
+  border: 2px solid red;
+  background-color: red;
+  cursor: pointer;
+}
+
+.navbar-top .navbar-user {
+  font-weight: bold;
+  color: white;
+  background-color: green;
+  margin-right: 35%;
+  border: 2px solid green;
+  border-radius: 10px;
+  width: auto;
+  padding-left: 5px;
+  padding-right: 5px;
 }

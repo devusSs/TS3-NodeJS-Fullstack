@@ -1,15 +1,20 @@
 import { useState, useEffect } from "react";
-import "../main.css";
+import "../app.css";
 import { Command } from "../types/Command";
 import Table from "react-bootstrap/Table";
+import { useAuthContext } from "../hooks/useAuthContext";
 
-export default function GetCommands() {
+const GetCommands = () => {
+  const { user }: any = useAuthContext();
+
   const [commands, setCommands] = useState<Command[]>([]);
 
   const getCommands = async () => {
     try {
       let url = import.meta.env.VITE_BASE_URL || "http://localhost:3000";
-      const resp = await fetch(url + "/commands");
+      const resp = await fetch(url + "/commands", {
+        headers: { Authorization: `Bearer ${user.data.token}` },
+      });
       const jsonData = await resp.json();
       setCommands(jsonData.data.result);
     } catch (err) {
@@ -18,8 +23,10 @@ export default function GetCommands() {
   };
 
   useEffect(() => {
-    getCommands();
-  }, []);
+    if (user) {
+      getCommands();
+    }
+  }, [user]);
 
   return (
     <Table striped bordered hover variant="dark">
@@ -49,4 +56,6 @@ export default function GetCommands() {
       </tbody>
     </Table>
   );
-}
+};
+
+export default GetCommands;

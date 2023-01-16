@@ -7,6 +7,7 @@ import { defaultRoute, invalidateBotStatus } from "./routes/home";
 import { userRoutes } from "./routes/users";
 import { commandRoutes } from "./routes/commands";
 import { messagesRoutes } from "./routes/messages";
+import { clientRoutes } from "./routes/clients";
 
 const start = async () => {
   const db: DBClient = await newDBClient();
@@ -25,7 +26,7 @@ const start = async () => {
 
   let corsOptions = {
     origin: config.FRONTEND_URL,
-    methods: `GET,PATCH,POST`,
+    methods: `GET,POST`,
     credentials: true,
     optionsSuccessStatus: 200,
   };
@@ -35,7 +36,8 @@ const start = async () => {
   app.set("db", db);
 
   app.use("/", defaultRoute);
-  // TODO: ADD AUTHORIZATION MIDDLEWARE (JWT)
+  app.use("/clients", clientRoutes);
+
   app.use("/users", userRoutes);
   app.use("/commands", commandRoutes);
   app.use("/messages", messagesRoutes);

@@ -1,16 +1,21 @@
 import { useState, useEffect } from "react";
-import "../main.css";
+import "../app.css";
 import { Message } from "../types/Message";
 import Table from "react-bootstrap/Table";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 // TODO: add search function / label for messages => filter
-export default function GetMessages() {
+const GetMessages = () => {
   const [messages, setMessages] = useState<Message[]>([]);
+
+  const { user }: any = useAuthContext();
 
   const getMessages = async () => {
     try {
       let url = import.meta.env.VITE_BASE_URL || "http://localhost:3000";
-      const resp = await fetch(url + "/messages");
+      const resp = await fetch(url + "/messages", {
+        headers: { Authorization: `Bearer ${user.data.token}` },
+      });
       const jsonData = await resp.json();
       setMessages(jsonData.data.result);
     } catch (err) {
@@ -19,8 +24,10 @@ export default function GetMessages() {
   };
 
   useEffect(() => {
-    getMessages();
-  }, []);
+    if (user) {
+      getMessages();
+    }
+  }, [user]);
 
   return (
     <Table striped bordered hover variant="dark">
@@ -50,4 +57,6 @@ export default function GetMessages() {
       </tbody>
     </Table>
   );
-}
+};
+
+export default GetMessages;

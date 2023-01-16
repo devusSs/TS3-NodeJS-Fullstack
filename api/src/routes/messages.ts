@@ -2,10 +2,12 @@ import { Temporal } from "@js-temporal/polyfill";
 import { SuccessResponse, ErrorResponse } from "../responses/responses";
 import express, { Request, Response } from "express";
 import { Message } from "../types/messages";
+import requireAuth from "../middleware/requireAuth";
 
 export const messagesRoutes = express.Router();
 
-// TODO: implement filter for messages via req params
+messagesRoutes.use(requireAuth);
+
 messagesRoutes.get("/", async (req: Request, res: Response) => {
   let result: Message[] | Error = await req.app.get("db").getMessages();
 

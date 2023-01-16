@@ -2,8 +2,11 @@ import { Temporal } from "@js-temporal/polyfill";
 import { SuccessResponse, ErrorResponse } from "../responses/responses";
 import express, { Request, Response } from "express";
 import { User } from "../types/users";
+import requireAuth from "../middleware/requireAuth";
 
 export const userRoutes = express.Router();
+
+userRoutes.use(requireAuth);
 
 userRoutes.get("/", async (req: Request, res: Response) => {
   let result: User[] | Error = await req.app.get("db").getUsers();
