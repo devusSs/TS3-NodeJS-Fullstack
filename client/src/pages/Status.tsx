@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../app.css";
 import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
@@ -8,6 +8,8 @@ const GetStatus = () => {
   const [status, setStatus] = useState("Bot is currently not active.");
   const [buttonText, setButtonText] = useState("Refetch Status");
   const [buttonActive, setButtonInactive] = useState(false);
+
+  const effectRan = useRef(false);
 
   const getStatus = async () => {
     try {
@@ -34,8 +36,11 @@ const GetStatus = () => {
     setTimeout(revertButton, 3000);
   };
 
-  useEffect(() => {
-    getStatus();
+  useEffect((): any => {
+    if (effectRan.current === false) {
+      getStatus();
+    }
+    return () => (effectRan.current = true);
   }, []);
 
   return (

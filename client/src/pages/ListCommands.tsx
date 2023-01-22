@@ -1,60 +1,80 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../app.css";
 import { Command } from "../types/Command";
 import Table from "react-bootstrap/Table";
-import { useAuthContext } from "../hooks/useAuthContext";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const GetCommands = () => {
-  const { user }: any = useAuthContext();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const [commands, setCommands] = useState<Command[]>([]);
 
-  const getCommands = async () => {
-    try {
-      let url = import.meta.env.VITE_BASE_URL || "http://localhost:3000";
-      const resp = await fetch(url + "/commands", {
-        headers: { Authorization: `Bearer ${user.data.token}` },
-      });
-      const jsonData = await resp.json();
-      setCommands(jsonData.data.result);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const axiosPrivate = useAxiosPrivate();
+
+  const effectRan = useRef(false);
 
   useEffect(() => {
-    if (user) {
+    if (effectRan.current === false) {
+      let isMounted = true;
+      const controller = new AbortController();
+
+      const getCommands = async () => {
+        try {
+          const response = await axiosPrivate.get("/commands", {
+            signal: controller.signal,
+          });
+          isMounted && setCommands(response?.data?.data?.result);
+        } catch (err) {
+          console.error(err);
+          navigate("/login", { state: { from: location }, replace: true });
+        }
+      };
+
       getCommands();
+
+      return () => {
+        isMounted = false;
+        effectRan.current = true;
+        controller.abort();
+      };
     }
-  }, [user]);
+  }, []);
 
   return (
-    <Table striped bordered hover variant="dark">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Output</th>
-          <th>Userlevel</th>
-          <th>Added</th>
-          <th>User Added</th>
-          <th>Edited</th>
-          <th>User Edited</th>
-        </tr>
-      </thead>
-      <tbody>
-        {commands.map((command) => (
-          <tr key={command.ID}>
-            <td key="{name}">{command.Name}</td>
-            <td key="{output}">{command.Output}</td>
-            <td key="{userlevel}">{command.Userlevel}</td>
-            <td key="{added}">{command.Added}</td>
-            <td key="{user_added}">{command.UserAdded}</td>
-            <td key="{edited}">{command.Edited}</td>
-            <td key="{user_edited}">{command.UserEdited}</td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
+    <div className="commands-table">
+      {commands?.length ? (
+        <Table striped bordered hover variant="dark">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Output</th>
+              <th>Userlevel</th>
+              <th>Added</th>
+              <th>User Added</th>
+              <th>Edited</th>
+              <th>User Edited</th>
+            </tr>
+          </thead>
+          <tbody>
+            {commands.map((command) => (
+              <tr key={command.ID}>
+                <td key="{name}">{command.Name}</td>
+                <td key="{output}">{command.Output}</td>
+                <td key="{userlevel}">{command.Userlevel}</td>
+                <td key="{added}">{command.Added}</td>
+                <td key="{user_added}">{command.UserAdded}</td>
+                <td key="{edited}">{command.Edited}</td>
+                <td key="{user_edited}">{command.UserEdited}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      ) : (
+        <div className="home">No commands to display.</div>
+      )}
+    </div>
   );
 };
 

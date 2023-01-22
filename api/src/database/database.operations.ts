@@ -10,8 +10,23 @@ const GetMessages = `
     SELECT * FROM messages;
 `;
 
+const AddToken = `
+    INSERT INTO refreshtokens (ownername, token, added) VALUES ($1, $2, $3) RETURNING id;
+`;
+
+const DeleteToken = `
+    DELETE FROM refreshtokens WHERE ownername = $1;
+`;
+
+const GetToken = `
+    SELECT * FROM refreshtokens WHERE ownername = $1;
+`;
+
 export default {
   GetUsers,
   GetCommands,
   GetMessages,
+  AddToken,
+  DeleteToken,
+  GetToken,
 };

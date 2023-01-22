@@ -33,11 +33,11 @@ const requireAuth = (req: Request, res: Response, next: NextFunction) => {
   } catch (err) {
     console.log(`Error verifying token: ${err}`);
     let resp: ErrorResponse = {
-      code: 401,
+      code: 403,
       error: { message: "Unauthorized request" },
       timestamp: Temporal.Now.plainDateTimeISO(),
     };
-    return res.status(401).json(resp);
+    return res.status(403).json(resp);
   }
 };
 

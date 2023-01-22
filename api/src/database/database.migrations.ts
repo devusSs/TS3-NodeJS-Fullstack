@@ -42,4 +42,18 @@ const CREATEMESSAGESTABLE = `
     );
 `;
 
-export default { CREATEUSERTABLE, CREATECOMMANDSTABLE, CREATEMESSAGESTABLE };
+const CREATEREFRESHTABLE = `
+    CREATE TABLE IF NOT EXISTS refreshtokens (
+        id bigserial NOT NULL,
+        ownername varchar(255) NOT NULL,
+        token varchar(255) NOT NULL,
+        added timestamp
+    );
+`;
+
+export default {
+  CREATEUSERTABLE,
+  CREATECOMMANDSTABLE,
+  CREATEMESSAGESTABLE,
+  CREATEREFRESHTABLE,
+};

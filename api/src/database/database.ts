@@ -1,5 +1,6 @@
 import { Client } from "pg";
 import config from "../config/config";
+import { AddToken, GetToken } from "../types/clients";
 import { Command } from "../types/commands";
 import { Message } from "../types/messages";
 import { User } from "../types/users";
@@ -31,6 +32,7 @@ export class DBClient {
     await this.#db.query(databaseMigrations.CREATEUSERTABLE);
     await this.#db.query(databaseMigrations.CREATECOMMANDSTABLE);
     await this.#db.query(databaseMigrations.CREATEMESSAGESTABLE);
+    await this.#db.query(databaseMigrations.CREATEREFRESHTABLE);
   }
 
   async getUsers(): Promise<User[] | Error> {
@@ -108,6 +110,50 @@ export class DBClient {
         messages.push(message);
       }
       return messages;
+    } catch (err: any) {
+      if (err instanceof Error) {
+        return err;
+      }
+      return err;
+    }
+  }
+
+  async addRefreshToken(add: AddToken): Promise<void | Error> {
+    try {
+      await this.#db.query(operations.AddToken, [
+        add.OwnerName,
+        add.Token,
+        add.Timestamp,
+      ]);
+    } catch (err: any) {
+      if (err instanceof Error) {
+        return err;
+      }
+      return err;
+    }
+  }
+
+  async deleteRefreshToken(username: string): Promise<void | Error> {
+    try {
+      await this.#db.query(operations.DeleteToken, [username]);
+    } catch (err: any) {
+      if (err instanceof Error) {
+        return err;
+      }
+      return err;
+    }
+  }
+
+  async getRefreshToken(username: string): Promise<GetToken | Error> {
+    try {
+      let result = await this.#db.query(operations.GetToken, [username]);
+      let token: GetToken = {
+        ID: result.rows[0].id,
+        OwnerName: result.rows[0].ownername,
+        Token: result.rows[0].token,
+        Timestamp: result.rows[0].added,
+      };
+      return token;
     } catch (err: any) {
       if (err instanceof Error) {
         return err;

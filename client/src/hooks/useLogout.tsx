@@ -1,13 +1,22 @@
-import { useAuthContext } from "./useAuthContext";
+import axios from "../api/axios";
+import useAuth from "./useAuth";
 
-export const useLogout = () => {
-  const { dispatch }: any = useAuthContext();
+const useLogout = () => {
+  const { setAuth }: any = useAuth();
 
-  const logout = () => {
-    localStorage.removeItem("user");
-
-    dispatch({ type: "LOGOUT" });
+  const logout = async () => {
+    setAuth({});
+    try {
+      const response = await axios("/clients/logout", {
+        method: "DELETE",
+        withCredentials: true,
+      });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return logout;
 };
+
+export default useLogout;

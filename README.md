@@ -13,8 +13,9 @@ Considering not every user may accept or like being tracked across your server t
 ## Project Warning
 
 This project has not been entirely finished yet, it's lacking styles and some components.<br/>
-Search for `//TODO:` in the project to see current problems or planned features.<br/>
-There may also be bugs and unwanted features which cannot be fixed or disabled yet.
+Search for `// TODO:` in the project to see current problems or planned features.<br/>
+There may also be bugs and unwanted features which cannot be fixed or disabled yet.<br/>
+The frontend also needs A LOT of cleanup and improvements, please do not expect everything to work all the time or everything to be 100% safe and production ready. Check the disclaimer at the bottom for more information.
 
 ## Project Structure
 
@@ -24,7 +25,7 @@ The project consists of three components:
 - the API which distributes data from the Postgres database
 - the Client which displays the data via web
 
-Everything has been written in Typescript and should be typesafe, there are however elements which have no valid or any types yet so expect bugs.
+Everything has been written in Typescript and should be typesafe, there are however elements which have no valid or any types yet so expect bugs. Especially the frontend still needs a lot of work, in design as well as typesafety.
 
 ## Project Setup
 
@@ -33,12 +34,16 @@ Docker support has not been added yet but will be added in the future so you can
 For now you may need to use node in every directory. This usually (!) means:
 
 ```bash
-npm run build && node build/app.ts
+npm run build && node build/app.js
 ```
 
 This may be different for Vite (the frontend) where you need to build the app using `npm run build` and deploy it using [NGINX](https://www.nginx.com/) for example.
 <br/>
 <br/>
+
+# Regarding dev mode problems
+
+React 18 has introduced StrictMode which will cause issues for authentication and sending requests against the backend from the frontend.<br/> This only applies for dev mode, everything will work fine when you run `npm run build && npm run preview` in the frontend's directory.
 
 # DISCLAIMER
 

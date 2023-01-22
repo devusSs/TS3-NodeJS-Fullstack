@@ -1,17 +1,19 @@
 import { Button, Container } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { useAuthContext } from "../hooks/useAuthContext";
-import { useLogout } from "../hooks/useLogout";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import useLogout from "../hooks/useLogout";
 
 export default function TopNav() {
+  const { auth }: any = useAuth();
   const logout = useLogout();
+  const navigate = useNavigate();
 
-  const onClick = () => {
-    logout();
+  const signOut = async () => {
+    await logout();
+    navigate("/");
   };
-
-  const { user }: any = useAuthContext();
 
   return (
     <Navbar className="navbar-top" bg="primary" variant="dark">
@@ -27,7 +29,8 @@ export default function TopNav() {
             <b style={{ color: "white" }}>Status</b>
           </Nav.Link>
         </Nav>
-        {user && (
+
+        {auth?.token && (
           <Nav className="me-auto">
             <Nav.Link href="/users">
               <b style={{ color: "white" }}>Users</b>
@@ -40,19 +43,19 @@ export default function TopNav() {
             </Nav.Link>
           </Nav>
         )}
-        {!user && (
+
+        {!auth?.token && (
           <Nav>
             <Button className="login-button" href="/login">
               Login
             </Button>
           </Nav>
         )}
-        {user && (
+
+        {auth?.token && (
           <Nav>
-            <Navbar.Text className="navbar-user">
-              {user.data.username}
-            </Navbar.Text>
-            <Button className="logout-button" onClick={onClick}>
+            <Navbar.Text className="navbar-user">{auth?.user}</Navbar.Text>
+            <Button className="logout-button" onClick={signOut}>
               Logout
             </Button>
           </Nav>

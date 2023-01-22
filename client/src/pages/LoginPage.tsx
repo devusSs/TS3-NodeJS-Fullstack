@@ -4,27 +4,65 @@ import Form from "react-bootstrap/Form";
 import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 
-import { useLogin } from "../hooks/useLogin";
+import { Container } from "react-bootstrap";
+import useAuth from "../hooks/useAuth";
+
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "../api/axios";
 
 const LoginPage = () => {
+  const { auth }: any = useAuth();
+  const { setAuth }: any = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [buttonText, setButtonText] = useState("Log In");
-  const { login, error, isLoading } = useLogin();
+  const [error, setError] = useState("");
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
-
-    await login(username, password);
+    try {
+      const response = await axios.post(
+        "/clients/login",
+        {
+          username,
+          password,
+        },
+        { withCredentials: true }
+      );
+      if (response.status !== 200) {
+        setError(response?.data?.error?.message);
+      }
+      if (response.status === 200) {
+        setAuth({
+          user: response?.data?.data?.username,
+          token: response?.data?.data?.token,
+          expiry: response?.data?.data?.expires_at,
+        });
+        navigate(from, { replace: true });
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Unknown error");
+        console.error(err);
+      }
+    }
   };
 
   useEffect(() => {
-    if (isLoading) {
-      setButtonDisabled(true);
-    } else {
-      setButtonDisabled(false);
+    if (auth?.token) {
+      navigate("/");
     }
+  });
+
+  useEffect(() => {
     if (error !== "") {
       toast(error, { type: "error" });
       setButtonText("Please wait 5 seconds before retrying");
@@ -34,10 +72,11 @@ const LoginPage = () => {
         setButtonDisabled(false);
       }, 5000);
     }
-  }, [isLoading, error]);
+  }, [error]);
 
+  // TODO: give this proper styling
   return (
-    <div className="login-page">
+    <Container className="login-page">
       <ToastContainer
         className="toast-container"
         position="top-right"
@@ -52,7 +91,7 @@ const LoginPage = () => {
         theme={"dark"}
       />
 
-      <Form className="login-form" onSubmit={submitHandler}>
+      <Form onSubmit={submitHandler}>
         <Form.Group controlId="formGridUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control
@@ -61,11 +100,6 @@ const LoginPage = () => {
               setUsername(e.target.value);
             }}
             placeholder="Enter your username"
-            style={{
-              width: "300px",
-              justifyContent: "center",
-              textAlign: "center",
-            }}
           />
         </Form.Group>
 
@@ -78,11 +112,6 @@ const LoginPage = () => {
               setPassword(e.target.value);
             }}
             placeholder="Enter your password"
-            style={{
-              width: "300px",
-              justifyContent: "center",
-              textAlign: "center",
-            }}
           />
         </Form.Group>
 
@@ -90,7 +119,7 @@ const LoginPage = () => {
           {buttonText}
         </Button>
       </Form>
-    </div>
+    </Container>
   );
 };
 

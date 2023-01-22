@@ -1,7 +1,8 @@
 import newDBClient, { DBClient } from "./database/database";
 import express, { Express } from "express";
 import config from "./config/config";
-import cors from "cors";
+import cors, { CorsOptions } from "cors";
+import cookieParser from "cookie-parser";
 
 import { defaultRoute, invalidateBotStatus } from "./routes/home";
 import { userRoutes } from "./routes/users";
@@ -23,10 +24,11 @@ const start = async () => {
   const app: Express = express();
 
   app.use(express.json());
+  app.use(cookieParser());
 
-  let corsOptions = {
+  let corsOptions: CorsOptions = {
     origin: config.FRONTEND_URL,
-    methods: `GET,POST`,
+    methods: `GET,POST,DELETE`,
     credentials: true,
     optionsSuccessStatus: 200,
   };
