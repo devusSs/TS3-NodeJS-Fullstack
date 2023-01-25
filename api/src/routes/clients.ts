@@ -85,28 +85,39 @@ clientRoutes.get("/refresh", async (req: Request, res: Response) => {
     return res.status(401).json(resp);
   }
 
-  const { username }: any = jwt.verify(refreshToken, config.REFRESH_SECRET);
+  try {
+    const { username }: any = jwt.verify(refreshToken, config.REFRESH_SECRET);
 
-  let dbReturn: GetToken = await req.app.get("db").getRefreshToken(username);
+    let dbReturn: GetToken = await req.app.get("db").getRefreshToken(username);
 
-  if (dbReturn.OwnerName !== config.LOGIN_USER) {
-    let resp: ErrorResponse = {
-      code: 404,
-      error: { message: "User not found" },
+    if (dbReturn.OwnerName !== config.LOGIN_USER) {
+      let resp: ErrorResponse = {
+        code: 404,
+        error: { message: "User not found" },
+        timestamp: Temporal.Now.plainDateTimeISO(),
+      };
+      return res.status(404).json(resp);
+    }
+
+    let token = createToken(username);
+
+    let resp: SuccessResponse = {
+      code: 200,
+      data: { username: username, token: token, expires_at: authTokenExpiry },
       timestamp: Temporal.Now.plainDateTimeISO(),
     };
-    return res.status(404).json(resp);
+
+    return res.status(200).json(resp);
+  } catch (err) {
+    if (err instanceof Error) {
+      let resp: ErrorResponse = {
+        code: 400,
+        error: { message: "Invalid token provided" },
+        timestamp: Temporal.Now.plainDateTimeISO(),
+      };
+      return res.status(400).json(resp);
+    }
   }
-
-  let token = createToken(username);
-
-  let resp: SuccessResponse = {
-    code: 200,
-    data: { username: username, token: token, expires_at: authTokenExpiry },
-    timestamp: Temporal.Now.plainDateTimeISO(),
-  };
-
-  return res.status(200).json(resp);
 });
 
 clientRoutes.delete("/logout", async (req: Request, res: Response) => {
