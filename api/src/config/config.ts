@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 dotenv.config({});
 
 interface ENV {
+  DEV_MODE: number | undefined;
   PORT: number | undefined;
   POSTGRES_HOST: string | undefined;
   POSTGRES_PORT: number | undefined;
@@ -17,6 +18,7 @@ interface ENV {
 }
 
 interface Config {
+  DEV_MODE: number;
   PORT: number;
   POSTGRES_HOST: string;
   POSTGRES_PORT: number;
@@ -32,6 +34,7 @@ interface Config {
 
 const getConfig = (): ENV => {
   return {
+    DEV_MODE: process.env.DEV_MODE ? Number(process.env.DEV_MODE) : undefined,
     PORT: process.env.PORT ? Number(process.env.PORT) : undefined,
     POSTGRES_HOST: process.env.POSTGRES_HOST,
     POSTGRES_PORT: process.env.POSTGRES_PORT

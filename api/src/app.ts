@@ -23,17 +23,25 @@ const start = async () => {
 
   const app: Express = express();
 
-  app.use(express.json());
-  app.use(cookieParser());
-
   let corsOptions: CorsOptions = {
     origin: config.FRONTEND_URL,
-    methods: `GET,POST,DELETE`,
+    methods: ["GET", "POST", "DELETE"],
+    allowedHeaders: [
+      "Authorization",
+      "Content-Type",
+      "Content-Length",
+      "Accept",
+    ],
     credentials: true,
     optionsSuccessStatus: 200,
   };
 
   app.use(cors(corsOptions));
+
+  console.log(`Setup CORS for domain ${corsOptions.origin}`);
+
+  app.use(express.json());
+  app.use(cookieParser());
 
   app.set("db", db);
 

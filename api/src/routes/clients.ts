@@ -61,15 +61,25 @@ clientRoutes.post("/login", async (req: Request, res: Response) => {
     await req.app.get("db").deleteRefreshToken(username);
   }, refreshTokenExpiry);
 
-  res
-    .cookie("token", refreshToken, {
-      httpOnly: true,
-      secure: true,
-      domain: config.FRONTEND_URL,
-      path: "/",
-      expires: new Date(Number(new Date()) + 1200 * 1000),
-    })
-    .json(resp);
+  if (config.DEV_MODE === 0) {
+    res
+      .cookie("token", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        domain: config.FRONTEND_URL,
+        path: "/",
+        expires: new Date(Number(new Date()) + 1200 * 1000),
+      })
+      .json(resp);
+  } else {
+    res
+      .cookie("token", refreshToken, {
+        httpOnly: true,
+        path: "/",
+        expires: new Date(Number(new Date()) + 1200 * 1000),
+      })
+      .json(resp);
+  }
 });
 
 clientRoutes.get("/refresh", async (req: Request, res: Response) => {
