@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import "../app.css";
+import "../App.css";
 import { Message } from "../types/Message";
 import Table from "react-bootstrap/Table";
 
@@ -14,33 +14,27 @@ const GetMessages = () => {
 
   const axiosPrivate = useAxiosPrivate();
 
-  const effectRan = useRef(false);
-
   useEffect(() => {
-    if (effectRan.current === false) {
-      let isMounted = true;
-      const controller = new AbortController();
+    let isMounted = true;
+    const controller = new AbortController();
 
-      const getMessages = async () => {
-        try {
-          const response = await axiosPrivate.get("/messages", {
-            signal: controller.signal,
-          });
-          isMounted && setMessages(response?.data?.data?.result);
-        } catch (err) {
-          console.error(err);
-          navigate("/login", { state: { from: location }, replace: true });
-        }
-      };
+    const getMessages = async () => {
+      try {
+        const response = await axiosPrivate.get("/messages", {
+          signal: controller.signal,
+        });
+        isMounted && setMessages(response?.data?.data?.result);
+      } catch (err) {
+        navigate("/login", { state: { from: location }, replace: true });
+      }
+    };
 
-      getMessages();
+    getMessages();
 
-      return () => {
-        isMounted = false;
-        effectRan.current = true;
-        controller.abort();
-      };
-    }
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
   }, []);
 
   return (

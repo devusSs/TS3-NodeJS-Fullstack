@@ -11,9 +11,7 @@ const useLogout = () => {
         method: "DELETE",
         withCredentials: true,
       });
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   };
 
   return logout;

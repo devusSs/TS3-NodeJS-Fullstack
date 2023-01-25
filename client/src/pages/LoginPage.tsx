@@ -1,4 +1,4 @@
-import "../app.css";
+import "../App.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useEffect, useRef, useState } from "react";
@@ -52,23 +52,14 @@ const LoginPage = () => {
         setError(err.message);
       } else {
         setError("Unknown error");
-        console.error(err);
       }
     }
   };
 
-  const effectRan = useRef(false);
-
   useEffect(() => {
-    if (effectRan.current === false) {
-      if (auth?.token) {
-        navigate("/");
-      }
-      effectRan.current = true;
+    if (auth?.token) {
+      navigate("/");
     }
-    return () => {
-      effectRan.current = true;
-    };
   }, []);
 
   useEffect(() => {

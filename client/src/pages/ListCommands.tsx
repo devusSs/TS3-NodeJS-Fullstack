@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import "../app.css";
+import "../App.css";
 import { Command } from "../types/Command";
 import Table from "react-bootstrap/Table";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
@@ -13,33 +13,27 @@ const GetCommands = () => {
 
   const axiosPrivate = useAxiosPrivate();
 
-  const effectRan = useRef(false);
-
   useEffect(() => {
-    if (effectRan.current === false) {
-      let isMounted = true;
-      const controller = new AbortController();
+    let isMounted = true;
+    const controller = new AbortController();
 
-      const getCommands = async () => {
-        try {
-          const response = await axiosPrivate.get("/commands", {
-            signal: controller.signal,
-          });
-          isMounted && setCommands(response?.data?.data?.result);
-        } catch (err) {
-          console.error(err);
-          navigate("/login", { state: { from: location }, replace: true });
-        }
-      };
+    const getCommands = async () => {
+      try {
+        const response = await axiosPrivate.get("/commands", {
+          signal: controller.signal,
+        });
+        isMounted && setCommands(response?.data?.data?.result);
+      } catch (err) {
+        navigate("/login", { state: { from: location }, replace: true });
+      }
+    };
 
-      getCommands();
+    getCommands();
 
-      return () => {
-        isMounted = false;
-        effectRan.current = true;
-        controller.abort();
-      };
-    }
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
   }, []);
 
   return (

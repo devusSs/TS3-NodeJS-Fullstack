@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import "../app.css";
+import "../App.css";
 import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,17 +9,13 @@ const GetStatus = () => {
   const [buttonText, setButtonText] = useState("Refetch Status");
   const [buttonActive, setButtonInactive] = useState(false);
 
-  const effectRan = useRef(false);
-
   const getStatus = async () => {
     try {
       let url = import.meta.env.VITE_BASE_URL || "http://localhost:3000";
       const resp = await fetch(url + "/status");
       const respJson = await resp.json();
       setStatus(respJson.data.status);
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   };
 
   const revertButton = () => {
@@ -37,10 +33,7 @@ const GetStatus = () => {
   };
 
   useEffect((): any => {
-    if (effectRan.current === false) {
-      getStatus();
-    }
-    return () => (effectRan.current = true);
+    getStatus();
   }, []);
 
   return (

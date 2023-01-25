@@ -10,28 +10,21 @@ const PersistLogin = () => {
   const refresh = useRefreshToken();
   const { auth }: any = useAuth();
 
-  const effectRan = useRef(false);
-
   useEffect((): any => {
-    if (effectRan.current === false) {
-      let isMounted = true;
+    let isMounted = true;
 
-      const verifyRefreshToken = async () => {
-        try {
-          await refresh();
-        } catch (err) {
-          console.error(err);
-        } finally {
-          isMounted && setIsLoading(false);
-        }
-      };
+    const verifyRefreshToken = async () => {
+      try {
+        await refresh();
+      } catch (err) {
+      } finally {
+        isMounted && setIsLoading(false);
+      }
+    };
 
-      !auth?.token ? verifyRefreshToken() : setIsLoading(false);
+    !auth?.token ? verifyRefreshToken() : setIsLoading(false);
 
-      effectRan.current = true;
-
-      return () => (isMounted = false);
-    }
+    return () => (isMounted = false);
   }, []);
 
   return (

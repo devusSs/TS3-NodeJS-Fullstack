@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import "../app.css";
+import "../App.css";
 import Table from "react-bootstrap/Table";
 import { User } from "../types/User";
 
@@ -14,33 +14,27 @@ const GetUsers = () => {
 
   const axiosPrivate = useAxiosPrivate();
 
-  const effectRan = useRef(false);
-
   useEffect(() => {
-    if (effectRan.current === false) {
-      let isMounted = true;
-      const controller = new AbortController();
+    let isMounted = true;
+    const controller = new AbortController();
 
-      const getUsers = async () => {
-        try {
-          const response = await axiosPrivate.get("/users", {
-            signal: controller.signal,
-          });
-          isMounted && setUsers(response?.data?.data?.result);
-        } catch (err) {
-          console.error(err);
-          navigate("/login", { state: { from: location }, replace: true });
-        }
-      };
+    const getUsers = async () => {
+      try {
+        const response = await axiosPrivate.get("/users", {
+          signal: controller.signal,
+        });
+        isMounted && setUsers(response?.data?.data?.result);
+      } catch (err) {
+        navigate("/login", { state: { from: location }, replace: true });
+      }
+    };
 
-      getUsers();
+    getUsers();
 
-      return () => {
-        isMounted = false;
-        effectRan.current = true;
-        controller.abort();
-      };
-    }
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
   }, []);
 
   return (
