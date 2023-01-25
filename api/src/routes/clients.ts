@@ -113,15 +113,26 @@ clientRoutes.delete("/logout", async (req: Request, res: Response) => {
   let cookies = req.cookies;
   let refreshToken = cookies.token;
 
-  const { username }: any = jwt.verify(refreshToken, config.REFRESH_SECRET);
+  try {
+    const { username }: any = jwt.verify(refreshToken, config.REFRESH_SECRET);
 
-  await req.app.get("db").deleteRefreshToken(username);
+    await req.app.get("db").deleteRefreshToken(username);
 
-  let resp: SuccessResponse = {
-    code: 204,
-    data: {},
-    timestamp: Temporal.Now.plainDateTimeISO(),
-  };
+    let resp: SuccessResponse = {
+      code: 204,
+      data: {},
+      timestamp: Temporal.Now.plainDateTimeISO(),
+    };
 
-  res.clearCookie("token").status(204).json(resp);
+    res.clearCookie("token").status(204).json(resp);
+  } catch (err) {
+    if (err instanceof Error) {
+      let resp: ErrorResponse = {
+        code: 400,
+        error: { message: "Invalid token provided" },
+        timestamp: Temporal.Now.plainDateTimeISO(),
+      };
+      return res.status(400).json(resp);
+    }
+  }
 });
