@@ -83,3 +83,18 @@
   margin-top: 15%;
   color: red;
 }
+
+.loading-centered {
+  color: white;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  margin-top: 15%;
+}
+
+.login-page .login-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+}

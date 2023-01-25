@@ -61,12 +61,11 @@ clientRoutes.post("/login", async (req: Request, res: Response) => {
     await req.app.get("db").deleteRefreshToken(username);
   }, refreshTokenExpiry);
 
-  // TODO: add url
-  // TODO: maybe add secure
   res
     .cookie("token", refreshToken, {
       httpOnly: true,
-      //domain: config.FRONTEND_URL,
+      secure: true,
+      domain: config.FRONTEND_URL,
       path: "/",
       expires: new Date(Number(new Date()) + 1200 * 1000),
     })

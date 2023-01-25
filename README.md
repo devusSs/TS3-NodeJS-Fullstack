@@ -43,7 +43,7 @@ This may be different for Vite (the frontend) where you need to build the app us
 
 # Regarding dev mode problems
 
-React 18 has introduced StrictMode which will cause issues for authentication and sending requests against the backend from the frontend.<br/> This only applies for dev mode, everything will work fine when you run `npm run build && npm run preview` in the frontend's directory.
+React 18 has more StrictMode limitations which will cause issues for authentication and sending requests against the backend from the frontend.<br/> This only applies for dev mode, everything will work fine when you run `npm run build && npm run preview` in the frontend's directory. Dev mode may be broken for now so please do not expect `npm run dev` to work.
 
 # DISCLAIMER
 
