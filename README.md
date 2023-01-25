@@ -29,16 +29,8 @@ Everything has been written in Typescript and should be typesafe, there are howe
 
 ## Project Setup
 
-Check the .env.example files in the bot's, api's and client's directory to find out how to setup the project.<br/>
-Docker support has not been added yet but will be added in the future so you can start the application with a single command.
-For now you may need to use node in every directory. This usually (!) means:
+### Check the [Setup](docs/setup/setup.md) folder for more information.
 
-```bash
-npm run build && node build/app.js
-```
-
-This may be different for Vite (the frontend) where you need to build the app using `npm run build` and deploy it using [NGINX](https://www.nginx.com/) for example.
-<br/>
 <br/>
 
 # Regarding dev mode problems
