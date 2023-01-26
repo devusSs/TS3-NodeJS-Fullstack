@@ -66,7 +66,7 @@ const GetCommands = () => {
           </tbody>
         </Table>
       ) : (
-        <div className="home">No commands to display.</div>
+        <div className="home-bold">No commands to display.</div>
       )}
     </div>
   );

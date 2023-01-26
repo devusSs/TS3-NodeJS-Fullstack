@@ -67,7 +67,7 @@ const GetMessages = () => {
           </tbody>
         </Table>
       ) : (
-        <div className="home">No messages to display.</div>
+        <div className="home-bold">No messages to display.</div>
       )}
     </div>
   );

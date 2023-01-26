@@ -11,6 +11,15 @@
   margin-top: 15%;
 }
 
+.home-bold {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 15%;
+  font-size: 32px;
+  font-weight: bold;
+}
+
 .tos {
   justify-content: center;
   align-items: center;

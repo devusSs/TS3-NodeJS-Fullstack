@@ -77,7 +77,7 @@ const GetUsers = () => {
           </tbody>
         </Table>
       ) : (
-        <div className="home">No users to display.</div>
+        <div className="home-bold">No users to display.</div>
       )}
     </div>
   );
