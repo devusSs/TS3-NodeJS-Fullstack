@@ -66,6 +66,43 @@ export class DBClient {
     }
   }
 
+  async getUsersByLUOrUID(
+    latestUsername: string,
+    uniqueID: string
+  ): Promise<User[] | Error> {
+    try {
+      let result = await this.#db.query(
+        operations.GetUsersByLatestUsernameOrUID,
+        [latestUsername, uniqueID]
+      );
+      let users: User[] = [];
+      for (let row of result.rows) {
+        let user: User = {
+          ID: row.id,
+          TSID: row.ts_id,
+          FirstUsername: row.first_username,
+          LatestUsername: row.latest_username,
+          FirstIP: row.first_ip,
+          LatestIP: row.latest_ip,
+          FirstConnection: row.first_connection,
+          LatestConnection: row.latest_connection,
+          LatestDisconnect: row.latest_disconnect,
+          Country: row.country,
+          Version: row.version,
+          Platform: row.platform,
+          UniqueID: row.unique_id,
+        };
+        users.push(user);
+      }
+      return users;
+    } catch (err: any) {
+      if (err instanceof Error) {
+        return err;
+      }
+      return err;
+    }
+  }
+
   async getCommands(): Promise<Command[] | Error> {
     try {
       let result = await this.#db.query(operations.GetCommands);

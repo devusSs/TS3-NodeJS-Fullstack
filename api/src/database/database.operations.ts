@@ -2,6 +2,10 @@ const GetUsers = `
     SELECT * FROM users;
 `;
 
+const GetUsersByLatestUsernameOrUID = `
+    SELECT * FROM users WHERE (latest_username = $1) OR (unique_id = $2);
+`;
+
 const GetCommands = `
     SELECT * FROM commands;
 `;
@@ -24,6 +28,7 @@ const GetToken = `
 
 export default {
   GetUsers,
+  GetUsersByLatestUsernameOrUID,
   GetCommands,
   GetMessages,
   AddToken,
