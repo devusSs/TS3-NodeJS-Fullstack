@@ -5,8 +5,8 @@ This is authorization protected (Bearer token).
 
 - [All users](users/get.md) : `GET /users/`
 - [One or multiple users](users/get.md) :
-  - Multiple users via their latest nickname: `GET /users?lu=`
   - One user via their unique id: `GET /users?uid=`
+  - Multiple users via their latest nickname: `GET /users?lu=`
 
 ### Command related
 
@@ -14,6 +14,9 @@ Each endpoint displays the TeamSpeak commands stored on the database which were 
 This is authorization protected (Bearer token).
 
 - [All commands](commands/get.md) : `GET /commands/`
+- [One or multiple commands](commands/get.md) :
+  - One command via it's name: `GET /commands?name=`
+  - Multiple commands via their userlevel: `GET /commands?ulevel=`
 
 ### Message related
 
