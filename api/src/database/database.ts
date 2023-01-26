@@ -129,6 +129,38 @@ export class DBClient {
     }
   }
 
+  async getCommandsByNameOrUserlevel(
+    name: string,
+    userlevel: string
+  ): Promise<Command[] | Error> {
+    try {
+      let result = await this.#db.query(
+        operations.GetCommandsByNameOrUserlevel,
+        [name, userlevel]
+      );
+      let commands: Command[] = [];
+      for (let row of result.rows) {
+        let command: Command = {
+          ID: row.id,
+          Name: row.name,
+          Output: row.output,
+          Userlevel: row.userlevel,
+          Added: row.added,
+          UserAdded: row.user_added,
+          Edited: row.edited,
+          UserEdited: row.user_edited,
+        };
+        commands.push(command);
+      }
+      return commands;
+    } catch (err: any) {
+      if (err instanceof Error) {
+        return err;
+      }
+      return err;
+    }
+  }
+
   async getMessages(): Promise<Message[] | Error> {
     try {
       let result = await this.#db.query(operations.GetMessages);

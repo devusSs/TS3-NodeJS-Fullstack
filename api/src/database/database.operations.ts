@@ -10,6 +10,10 @@ const GetCommands = `
     SELECT * FROM commands;
 `;
 
+const GetCommandsByNameOrUserlevel = `
+    SELECT * FROM commands WHERE (name = $1) OR (userlevel = $2);
+`;
+
 const GetMessages = `
     SELECT * FROM messages;
 `;
@@ -30,6 +34,7 @@ export default {
   GetUsers,
   GetUsersByLatestUsernameOrUID,
   GetCommands,
+  GetCommandsByNameOrUserlevel,
   GetMessages,
   AddToken,
   DeleteToken,
