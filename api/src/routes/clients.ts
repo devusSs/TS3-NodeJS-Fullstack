@@ -147,7 +147,10 @@ clientRoutes.delete("/logout", async (req: Request, res: Response) => {
 
     if (config.DEV_MODE === 0) {
       res
-        .clearCookie("token", { domain: config.FRONTEND_URL, path: "/" })
+        .clearCookie("token", {
+          domain: config.FRONTEND_URL.replace("https://", ""),
+          path: "/",
+        })
         .status(204)
         .json(resp);
     } else {
