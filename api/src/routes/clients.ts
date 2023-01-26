@@ -145,7 +145,14 @@ clientRoutes.delete("/logout", async (req: Request, res: Response) => {
       timestamp: Temporal.Now.plainDateTimeISO(),
     };
 
-    res.clearCookie("token").status(204).json(resp);
+    if (config.DEV_MODE === 0) {
+      res
+        .clearCookie("token", { domain: config.FRONTEND_URL, path: "/" })
+        .status(204)
+        .json(resp);
+    } else {
+      res.clearCookie("token", { path: "/" }).status(204).json(resp);
+    }
   } catch (err) {
     if (err instanceof Error) {
       let resp: ErrorResponse = {
