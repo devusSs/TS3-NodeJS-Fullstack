@@ -36,3 +36,7 @@ The frontend needs environment variabled to work properly or even start.
 - [Example .env file](../../client/.env.example)
 
 NOTE: BASE_URL equals the API url or domain
+
+## Networking
+
+The API as well as the client expect `https://` urls in production and will not (!) work with `http://` or even `localhost` requests. Make sure to host the API on an `https://` server. [NGINX docs](http://nginx.org/en/docs/http/configuring_https_servers.html)
