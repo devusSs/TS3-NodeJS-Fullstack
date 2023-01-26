@@ -4,6 +4,9 @@ Each endpoint displays the TeamSpeak users stored on the database which were col
 This is authorization protected (Bearer token).
 
 - [All users](users/get.md) : `GET /users/`
+- [One or multiple users](users/get.md) :
+  - Multiple users via their latest nickname: `GET /users?lu=`
+  - One user via their unique id: `GET /users?uid=`
 
 ### Command related
 
