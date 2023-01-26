@@ -66,7 +66,7 @@ clientRoutes.post("/login", async (req: Request, res: Response) => {
       .cookie("token", refreshToken, {
         httpOnly: true,
         secure: true,
-        domain: config.FRONTEND_URL,
+        domain: config.FRONTEND_URL.replace("https://", ""),
         path: "/",
         expires: new Date(Number(new Date()) + 1200 * 1000),
       })
