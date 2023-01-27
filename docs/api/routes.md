@@ -24,6 +24,9 @@ Each endpoint displays the TeamSpeak messages stored on the database which were 
 This is authorization protected (Bearer token).
 
 - [All messages](messages/get.md) : `GET /messages/`
+- [One or multiple messages](messages/get.md) :
+  - Multiple messages via their targetmode: `GET /messages?tm=`
+  - Multiple messages via their invoker uid: `GET /messages?uid=`
 
 ### Client related
 
