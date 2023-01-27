@@ -18,6 +18,10 @@ const GetMessages = `
     SELECT * FROM messages;
 `;
 
+const GetMessagesFromUIDOrTargetMode = `
+    SELECT * FROM messages WHERE (invoker_uid = $1) OR (targetmode = $2);
+`;
+
 const AddToken = `
     INSERT INTO refreshtokens (ownername, token, added) VALUES ($1, $2, $3) RETURNING id;
 `;
@@ -36,6 +40,7 @@ export default {
   GetCommands,
   GetCommandsByNameOrUserlevel,
   GetMessages,
+  GetMessagesFromUIDOrTargetMode,
   AddToken,
   DeleteToken,
   GetToken,

@@ -187,6 +187,38 @@ export class DBClient {
     }
   }
 
+  async getMessagesByUIDOrTargetmode(
+    uid: string,
+    targetmode: string
+  ): Promise<Message[] | Error> {
+    try {
+      let result = await this.#db.query(
+        operations.GetMessagesFromUIDOrTargetMode,
+        [uid, targetmode]
+      );
+      let messages: Message[] = [];
+      for (let row of result.rows) {
+        let message: Message = {
+          ID: row.id,
+          InvokerNick: row.invoker_nick,
+          InvokerDBID: row.invoker_dbid,
+          InvokerUID: row.invoker_uid,
+          InvokerIP: row.invoker_ip,
+          Message: row.message,
+          Targetmode: row.targetmode,
+          DateTime: row.datetime,
+        };
+        messages.push(message);
+      }
+      return messages;
+    } catch (err: any) {
+      if (err instanceof Error) {
+        return err;
+      }
+      return err;
+    }
+  }
+
   async addRefreshToken(add: AddToken): Promise<void | Error> {
     try {
       await this.#db.query(operations.AddToken, [
