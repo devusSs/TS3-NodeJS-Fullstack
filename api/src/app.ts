@@ -48,7 +48,6 @@ const start = async () => {
   app.use("/", defaultRoute);
   app.use("/clients", clientRoutes);
 
-  // TODO: add more routes to query single users, commands, messages or filter them
   app.use("/users", userRoutes);
   app.use("/commands", commandRoutes);
   app.use("/messages", messagesRoutes);
