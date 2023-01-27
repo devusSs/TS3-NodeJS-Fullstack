@@ -8,6 +8,7 @@ export const messagesRoutes = express.Router();
 
 messagesRoutes.use(requireAuth);
 
+// TODO: add filter by sent date
 messagesRoutes.get("/", async (req: Request, res: Response) => {
   let invokerUID = req?.query?.uid;
   let targetmode = req?.query?.tm;

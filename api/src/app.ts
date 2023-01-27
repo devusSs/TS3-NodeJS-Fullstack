@@ -52,6 +52,8 @@ const start = async () => {
   app.use("/commands", commandRoutes);
   app.use("/messages", messagesRoutes);
 
+  // TODO: admin interface, server sent events for command added, edited
+
   setInterval(invalidateBotStatus, 5000);
 
   app.listen(config.PORT, () => {

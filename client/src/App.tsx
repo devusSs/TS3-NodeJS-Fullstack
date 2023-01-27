@@ -15,6 +15,7 @@ import { AuthProvider } from "./context/AuthProvider";
 import RequireAuth from "./components/RequireAuth";
 import PersistLogin from "./components/PersistLogin";
 
+// TODO: add admin interface
 const App = () => {
   return (
     <BrowserRouter>
