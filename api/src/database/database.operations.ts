@@ -2,24 +2,12 @@ const GetUsers = `
     SELECT * FROM users;
 `;
 
-const GetUsersByLatestUsernameOrUID = `
-    SELECT * FROM users WHERE (latest_username = $1) OR (unique_id = $2);
-`;
-
 const GetCommands = `
     SELECT * FROM commands;
 `;
 
-const GetCommandsByNameOrUserlevel = `
-    SELECT * FROM commands WHERE (name = $1) OR (userlevel = $2);
-`;
-
 const GetMessages = `
     SELECT * FROM messages;
-`;
-
-const GetMessagesFromUIDOrTargetMode = `
-    SELECT * FROM messages WHERE (invoker_uid = $1) OR (targetmode = $2);
 `;
 
 const AddToken = `
@@ -36,11 +24,8 @@ const GetToken = `
 
 export default {
   GetUsers,
-  GetUsersByLatestUsernameOrUID,
   GetCommands,
-  GetCommandsByNameOrUserlevel,
   GetMessages,
-  GetMessagesFromUIDOrTargetMode,
   AddToken,
   DeleteToken,
   GetToken,

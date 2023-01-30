@@ -66,43 +66,6 @@ export class DBClient {
     }
   }
 
-  async getUsersByLUOrUID(
-    latestUsername: string,
-    uniqueID: string
-  ): Promise<User[] | Error> {
-    try {
-      let result = await this.#db.query(
-        operations.GetUsersByLatestUsernameOrUID,
-        [latestUsername, uniqueID]
-      );
-      let users: User[] = [];
-      for (let row of result.rows) {
-        let user: User = {
-          ID: row.id,
-          TSID: row.ts_id,
-          FirstUsername: row.first_username,
-          LatestUsername: row.latest_username,
-          FirstIP: row.first_ip,
-          LatestIP: row.latest_ip,
-          FirstConnection: row.first_connection,
-          LatestConnection: row.latest_connection,
-          LatestDisconnect: row.latest_disconnect,
-          Country: row.country,
-          Version: row.version,
-          Platform: row.platform,
-          UniqueID: row.unique_id,
-        };
-        users.push(user);
-      }
-      return users;
-    } catch (err: any) {
-      if (err instanceof Error) {
-        return err;
-      }
-      return err;
-    }
-  }
-
   async getCommands(): Promise<Command[] | Error> {
     try {
       let result = await this.#db.query(operations.GetCommands);
@@ -129,73 +92,9 @@ export class DBClient {
     }
   }
 
-  async getCommandsByNameOrUserlevel(
-    name: string,
-    userlevel: string
-  ): Promise<Command[] | Error> {
-    try {
-      let result = await this.#db.query(
-        operations.GetCommandsByNameOrUserlevel,
-        [name, userlevel]
-      );
-      let commands: Command[] = [];
-      for (let row of result.rows) {
-        let command: Command = {
-          ID: row.id,
-          Name: row.name,
-          Output: row.output,
-          Userlevel: row.userlevel,
-          Added: row.added,
-          UserAdded: row.user_added,
-          Edited: row.edited,
-          UserEdited: row.user_edited,
-        };
-        commands.push(command);
-      }
-      return commands;
-    } catch (err: any) {
-      if (err instanceof Error) {
-        return err;
-      }
-      return err;
-    }
-  }
-
   async getMessages(): Promise<Message[] | Error> {
     try {
       let result = await this.#db.query(operations.GetMessages);
-      let messages: Message[] = [];
-      for (let row of result.rows) {
-        let message: Message = {
-          ID: row.id,
-          InvokerNick: row.invoker_nick,
-          InvokerDBID: row.invoker_dbid,
-          InvokerUID: row.invoker_uid,
-          InvokerIP: row.invoker_ip,
-          Message: row.message,
-          Targetmode: row.targetmode,
-          DateTime: row.datetime,
-        };
-        messages.push(message);
-      }
-      return messages;
-    } catch (err: any) {
-      if (err instanceof Error) {
-        return err;
-      }
-      return err;
-    }
-  }
-
-  async getMessagesByUIDOrTargetmode(
-    uid: string,
-    targetmode: string
-  ): Promise<Message[] | Error> {
-    try {
-      let result = await this.#db.query(
-        operations.GetMessagesFromUIDOrTargetMode,
-        [uid, targetmode]
-      );
       let messages: Message[] = [];
       for (let row of result.rows) {
         let message: Message = {
