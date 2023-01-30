@@ -22,6 +22,10 @@ const GetToken = `
     SELECT * FROM refreshtokens WHERE ownername = $1;
 `;
 
+const GetEvents = `
+    SELECT * FROM events;
+`;
+
 export default {
   GetUsers,
   GetCommands,
@@ -29,4 +33,5 @@ export default {
   AddToken,
   DeleteToken,
   GetToken,
+  GetEvents,
 };

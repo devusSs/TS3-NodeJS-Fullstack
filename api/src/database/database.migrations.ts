@@ -51,9 +51,20 @@ const CREATEREFRESHTABLE = `
     );
 `;
 
+const CREATEEVENTSTABLE = `
+    CREATE TABLE IF NOT EXISTS events (
+        id bigserial NOT NULL,
+        type varchar(255) NOT NULL,
+        datetime timestamp,
+        emitter varchar(255) NOT NULL,
+        status int
+    );
+`;
+
 export default {
   CREATEUSERTABLE,
   CREATECOMMANDSTABLE,
   CREATEMESSAGESTABLE,
   CREATEREFRESHTABLE,
+  CREATEEVENTSTABLE,
 };
