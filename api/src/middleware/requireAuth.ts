@@ -21,7 +21,7 @@ const requireAuth = (req: Request, res: Response, next: NextFunction) => {
 
   try {
     const { username }: any = jwt.verify(token, config.JWT_SECRET);
-    if (username !== config.LOGIN_USER) {
+    if (username !== config.LOGIN_USER || username !== config.BOT_LOGIN) {
       let resp: ErrorResponse = {
         code: 401,
         error: { message: "Unauthorized request" },
