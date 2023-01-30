@@ -44,7 +44,7 @@ const GetStatus = () => {
   };
 
   useEffect(() => {
-    getStatus();
+    refreshStatus();
   }, []);
 
   useEffect(() => {
