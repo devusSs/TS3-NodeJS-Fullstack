@@ -9,6 +9,7 @@ import { userRoutes } from "./routes/users";
 import { commandRoutes } from "./routes/commands";
 import { messagesRoutes } from "./routes/messages";
 import { clientRoutes } from "./routes/clients";
+import { botRoutes } from "./routes/bot";
 
 const start = async () => {
   const db: DBClient = await newDBClient();
@@ -24,7 +25,7 @@ const start = async () => {
   const app: Express = express();
 
   let corsOptions: CorsOptions = {
-    origin: config.FRONTEND_URL,
+    origin: [config.FRONTEND_URL, config.BOT_URL],
     methods: ["GET", "POST", "DELETE"],
     allowedHeaders: [
       "Authorization",
@@ -38,7 +39,7 @@ const start = async () => {
 
   app.use(cors(corsOptions));
 
-  console.log(`Setup CORS for domain ${corsOptions.origin}`);
+  console.log(`Setup CORS for ${corsOptions.origin}`);
 
   app.use(express.json());
   app.use(cookieParser());
@@ -53,6 +54,8 @@ const start = async () => {
   app.use("/messages", messagesRoutes);
 
   // TODO: admin interface, server sent events for command added, edited
+  // TODO: update routes.md
+  app.use("/bot", botRoutes);
 
   setInterval(invalidateBotStatus, 5000);
 
