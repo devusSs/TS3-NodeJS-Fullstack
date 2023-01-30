@@ -12,19 +12,19 @@ messagesRoutes.get("/", async (req: Request, res: Response) => {
   let invokerUID = req?.query?.uid;
   let targetmode = req?.query?.tm;
 
+  let result: Message[] | Error = await req.app.get("db").getMessages();
+
+  if (result instanceof Error) {
+    let resp: ErrorResponse = {
+      code: 500,
+      error: { message: result.message },
+      timestamp: Temporal.Now.plainDateTimeISO(),
+    };
+    res.status(500).json(resp);
+    return;
+  }
+
   if (invokerUID !== undefined || targetmode !== undefined) {
-    let result: Message[] | Error = await req.app.get("db").getMessages();
-
-    if (result instanceof Error) {
-      let resp: ErrorResponse = {
-        code: 500,
-        error: { message: result.message },
-        timestamp: Temporal.Now.plainDateTimeISO(),
-      };
-      res.status(500).json(resp);
-      return;
-    }
-
     if (invokerUID !== undefined && targetmode !== undefined) {
       const filteredMessages = result.filter(
         (message) =>
@@ -92,18 +92,6 @@ messagesRoutes.get("/", async (req: Request, res: Response) => {
       return res.status(200).json(resp);
     }
   } else {
-    let result: Message[] | Error = await req.app.get("db").getMessages();
-
-    if (result instanceof Error) {
-      let resp: ErrorResponse = {
-        code: 500,
-        error: { message: result.message },
-        timestamp: Temporal.Now.plainDateTimeISO(),
-      };
-      res.status(500).json(resp);
-      return;
-    }
-
     let resp: SuccessResponse = {
       code: 200,
       data: { result },
