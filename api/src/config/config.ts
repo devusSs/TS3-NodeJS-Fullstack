@@ -13,6 +13,9 @@ interface ENV {
   FRONTEND_URL: string | undefined;
   LOGIN_USER: string | undefined;
   LOGIN_PASS: string | undefined;
+  BOT_LOGIN: string | undefined;
+  BOT_PASS: string | undefined;
+  BOT_URL: string | undefined;
   JWT_SECRET: string | undefined;
   REFRESH_SECRET: string | undefined;
 }
@@ -28,6 +31,9 @@ interface Config {
   FRONTEND_URL: string;
   LOGIN_USER: string;
   LOGIN_PASS: string;
+  BOT_LOGIN: string;
+  BOT_PASS: string;
+  BOT_URL: string;
   JWT_SECRET: string;
   REFRESH_SECRET: string;
 }
@@ -46,6 +52,9 @@ const getConfig = (): ENV => {
     FRONTEND_URL: process.env.FRONTEND_URL,
     LOGIN_USER: process.env.LOGIN_USER,
     LOGIN_PASS: process.env.LOGIN_PASS,
+    BOT_LOGIN: process.env.BOT_LOGIN,
+    BOT_PASS: process.env.BOT_PASS,
+    BOT_URL: process.env.BOT_URL,
     JWT_SECRET: process.env.JWT_SECRET,
     REFRESH_SECRET: process.env.REFRESH_SECRET,
   };
