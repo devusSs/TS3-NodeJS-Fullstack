@@ -10,6 +10,7 @@ import { commandRoutes } from "./routes/commands";
 import { messagesRoutes } from "./routes/messages";
 import { clientRoutes } from "./routes/clients";
 import { botRoutes } from "./routes/bot";
+import { adminRoutes } from "./routes/admin";
 
 const start = async () => {
   const db: DBClient = await newDBClient();
@@ -39,7 +40,7 @@ const start = async () => {
 
   app.use(cors(corsOptions));
 
-  console.log(`Setup CORS for ${corsOptions.origin}`);
+  console.log(`Setup CORS for ${corsOptions.origin?.toString()}`);
 
   app.use(express.json());
   app.use(cookieParser());
@@ -53,9 +54,9 @@ const start = async () => {
   app.use("/commands", commandRoutes);
   app.use("/messages", messagesRoutes);
 
-  // TODO: admin interface, server sent events for command added, edited
-  // TODO: update routes.md
   app.use("/bot", botRoutes);
+
+  app.use("/admin", adminRoutes);
 
   setInterval(invalidateBotStatus, 5000);
 
