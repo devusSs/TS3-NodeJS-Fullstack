@@ -28,6 +28,12 @@ This is authorization protected (Bearer token).
   - Multiple messages via their targetmode: `GET /messages?tm=`
   - Multiple messages via their invoker uid: `GET /messages?uid=`
 
+### Bot related
+
+Only relevant for the bot so it can login and generate JWT tokens for it's own requests.
+
+- [Bot login](bot/login.md) : `POST /bot/login`
+
 ### Client related
 
 Endpoints related to clients registered on the API.
