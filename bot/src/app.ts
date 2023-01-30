@@ -16,6 +16,7 @@ import { Whoami } from "ts3-nodejs-library/lib/types/ResponseTypes";
 import { UserConnect, UserDisconnect } from "./types/users";
 import { handleAcceptTOS } from "./tos/tos";
 
+// TODO: add events / logs
 const start = async () => {
   const startTime: Temporal.PlainTime = Temporal.Now.plainTimeISO();
 
