@@ -13,9 +13,7 @@ commandRoutes.get("/", async (req: Request, res: Response) => {
   let commandULevel = req?.query?.ulevel;
 
   if (commandName !== undefined || commandULevel !== undefined) {
-    let result: Command[] | Error = await req.app
-      .get("db")
-      .getCommandsByNameOrUserlevel(commandName, commandULevel);
+    let result: Command[] | Error = await req.app.get("db").getCommands();
 
     if (result instanceof Error) {
       let resp: ErrorResponse = {
@@ -27,21 +25,72 @@ commandRoutes.get("/", async (req: Request, res: Response) => {
       return;
     }
 
-    if (result.length === 0) {
-      let resp: ErrorResponse = {
-        code: 404,
-        error: { message: "No corresponding command found." },
+    if (commandName !== undefined && commandULevel !== undefined) {
+      const filteredCommands = result.filter(
+        (command) =>
+          command.Name === commandName && command.Userlevel === commandULevel
+      );
+
+      if (filteredCommands.length === 0) {
+        let resp: ErrorResponse = {
+          code: 404,
+          error: { message: "No corresponding commands found." },
+          timestamp: Temporal.Now.plainDateTimeISO(),
+        };
+        return res.status(404).json(resp);
+      }
+
+      let resp: SuccessResponse = {
+        code: 200,
+        data: filteredCommands,
         timestamp: Temporal.Now.plainDateTimeISO(),
       };
-      return res.status(404).json(resp);
+      return res.status(200).json(resp);
     }
 
-    let resp: SuccessResponse = {
-      code: 200,
-      data: { result },
-      timestamp: Temporal.Now.plainDateTimeISO(),
-    };
-    res.status(200).json(resp);
+    if (commandName !== undefined) {
+      const filteredCommands = result.filter(
+        (command) => command.Name === commandName
+      );
+
+      if (filteredCommands.length === 0) {
+        let resp: ErrorResponse = {
+          code: 404,
+          error: { message: "No corresponding commands found." },
+          timestamp: Temporal.Now.plainDateTimeISO(),
+        };
+        return res.status(404).json(resp);
+      }
+
+      let resp: SuccessResponse = {
+        code: 200,
+        data: filteredCommands,
+        timestamp: Temporal.Now.plainDateTimeISO(),
+      };
+      return res.status(200).json(resp);
+    }
+
+    if (commandULevel !== undefined) {
+      const filteredCommands = result.filter(
+        (command) => command.Userlevel === commandULevel
+      );
+
+      if (filteredCommands.length === 0) {
+        let resp: ErrorResponse = {
+          code: 404,
+          error: { message: "No corresponding commands found." },
+          timestamp: Temporal.Now.plainDateTimeISO(),
+        };
+        return res.status(404).json(resp);
+      }
+
+      let resp: SuccessResponse = {
+        code: 200,
+        data: filteredCommands,
+        timestamp: Temporal.Now.plainDateTimeISO(),
+      };
+      return res.status(200).json(resp);
+    }
   } else {
     let result: Command[] | Error = await req.app.get("db").getCommands();
 
