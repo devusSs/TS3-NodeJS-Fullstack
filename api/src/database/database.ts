@@ -4,6 +4,7 @@ import { AddToken, GetToken } from "../types/clients";
 import { Command } from "../types/commands";
 import { Message } from "../types/messages";
 import { User } from "../types/users";
+import { Event } from "../types/events";
 import PINGDATABASE from "./database.base";
 import databaseMigrations from "./database.migrations";
 import operations from "./database.operations";
@@ -33,6 +34,7 @@ export class DBClient {
     await this.#db.query(databaseMigrations.CREATECOMMANDSTABLE);
     await this.#db.query(databaseMigrations.CREATEMESSAGESTABLE);
     await this.#db.query(databaseMigrations.CREATEREFRESHTABLE);
+    await this.#db.query(databaseMigrations.CREATEEVENTSTABLE);
   }
 
   async getUsers(): Promise<User[] | Error> {
@@ -154,6 +156,29 @@ export class DBClient {
         Timestamp: result.rows[0].added,
       };
       return token;
+    } catch (err: any) {
+      if (err instanceof Error) {
+        return err;
+      }
+      return err;
+    }
+  }
+
+  async getEvents(): Promise<Event[] | Error> {
+    try {
+      let result = await this.#db.query(operations.GetEvents);
+      let events: Event[] = [];
+      for (let row of result.rows) {
+        let event: Event = {
+          ID: row.id,
+          Type: row.type,
+          Datetime: row.datetime,
+          Emitter: row.emitter,
+          Status: row.status,
+        };
+        events.push(event);
+      }
+      return events;
     } catch (err: any) {
       if (err instanceof Error) {
         return err;
