@@ -12,19 +12,19 @@ commandRoutes.get("/", async (req: Request, res: Response) => {
   let commandName = req?.query?.name;
   let commandULevel = req?.query?.ulevel;
 
+  let result: Command[] | Error = await req.app.get("db").getCommands();
+
+  if (result instanceof Error) {
+    let resp: ErrorResponse = {
+      code: 500,
+      error: { message: result.message },
+      timestamp: Temporal.Now.plainDateTimeISO(),
+    };
+    res.status(500).json(resp);
+    return;
+  }
+
   if (commandName !== undefined || commandULevel !== undefined) {
-    let result: Command[] | Error = await req.app.get("db").getCommands();
-
-    if (result instanceof Error) {
-      let resp: ErrorResponse = {
-        code: 500,
-        error: { message: result.message },
-        timestamp: Temporal.Now.plainDateTimeISO(),
-      };
-      res.status(500).json(resp);
-      return;
-    }
-
     if (commandName !== undefined && commandULevel !== undefined) {
       const filteredCommands = result.filter(
         (command) =>
@@ -92,18 +92,6 @@ commandRoutes.get("/", async (req: Request, res: Response) => {
       return res.status(200).json(resp);
     }
   } else {
-    let result: Command[] | Error = await req.app.get("db").getCommands();
-
-    if (result instanceof Error) {
-      let resp: ErrorResponse = {
-        code: 500,
-        error: { message: result.message },
-        timestamp: Temporal.Now.plainDateTimeISO(),
-      };
-      res.status(500).json(resp);
-      return;
-    }
-
     let resp: SuccessResponse = {
       code: 200,
       data: { result },
