@@ -6,6 +6,7 @@ import { Event } from "../types/events";
 
 export const adminRoutes = express.Router();
 
+// TODO: re-enable
 //adminRoutes.use(requireAuth);
 
 adminRoutes.get("/events", async (req: Request, res: Response) => {
